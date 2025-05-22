@@ -10,7 +10,7 @@ public class vendasVIEW extends javax.swing.JFrame {
      */
     public vendasVIEW() {
         initComponents();
-        
+        listarProdutosVendidos();
     }
 
     @SuppressWarnings("unchecked")
@@ -118,8 +118,26 @@ public class vendasVIEW extends javax.swing.JFrame {
         });
     }
     
-    
-    
+    private void listarProdutosVendidos(){
+        try { // Já veio montado
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            DefaultTableModel model = (DefaultTableModel) listaProdutosVendidos.getModel();
+            model.setNumRows(0);
+            
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+            
+            for(int i = 0; i < listagem.size(); i++){
+                model.addRow(new Object[]{
+                    listagem.get(i).getId(),
+                    listagem.get(i).getNome(),
+                    listagem.get(i).getValor(),
+                    listagem.get(i).getStatus()
+                });
+            }
+        } catch (Exception e) {
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
